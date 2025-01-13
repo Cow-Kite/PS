@@ -9,5 +9,5 @@ for _ in range(n):
         print('\n프로그램을 중단합니다.')
         break
 
-else:
+else: 
     print('\n난수 생성을 종료합니다.')
