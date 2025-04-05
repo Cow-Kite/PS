@@ -1,3 +1,4 @@
+# 파리 퇴치
 T = int(input())
 
 for t in range(1, T+1):
