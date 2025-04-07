@@ -14,6 +14,8 @@ def check():
 
 def dfs(n, s):
     global ans
+    if ans==1: # 이미 정답을 찾았으면, 모든 dfs 중단
+        return
 
     if n==cnt: # 모든 개수를 선택완료
         if check()==1:
@@ -27,6 +29,7 @@ def dfs(n, s):
             arr[ti][tj] = 1
             dfs(n+1, j+1)
             arr[ti][tj] = 0
+
 arr = [[0]*(N+2) for _ in range(H+1)] # 좌우 공백 추가
 # 사다리 입력 받기
 for _ in range(M):
@@ -40,15 +43,15 @@ for i in range(1, H+1):
         if arr[i][j] == 0:
             pos.append((i, j))
 CNT = len(pos)
-
+total = 0
 # 추가하는 사다리 개수 0~3 실행 -> 안되면 -1이 정답
 for cnt in range(4):
     ans = 0
     dfs(0, 0) # CNT개에서 cnt개수를 뽑는 모든 조합
     if ans == 1:
-        ans = cnt
+        total = cnt
         break
 else:
-    ans = -1
+    total = -1
 
-print(ans)
+print(total)
