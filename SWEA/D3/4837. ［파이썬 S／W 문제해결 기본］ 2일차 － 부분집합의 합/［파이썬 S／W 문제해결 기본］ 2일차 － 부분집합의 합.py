@@ -2,6 +2,10 @@
 
 def dfs(n, sm, cnt):
     global ans
+    # 가지치기: 가장 마지막에 고민... 가장 위에 처리
+    if sm > K: # 이미 초과.. 음수가 없기때문에
+        return
+    
     # 종료조건
     if n==N:
         if sm == K and cnt==CNT:
