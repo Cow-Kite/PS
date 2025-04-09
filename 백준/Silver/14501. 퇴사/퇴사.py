@@ -1,19 +1,17 @@
-n = int(input())
-T = []
-P = []
+# 백트래킹도 되고 dp도 되는데, dp가 훨씬 효율적
+N = int(input())
 
-for _ in range(n):
-    t, p = map(int, input().split())
-    T.append(t)
-    P.append(p)
+T = [0]*N
+P = [0]*N
+dp = [0]*(N+1) # 초기값 때문에
 
-dp = [0] * (n+2)
+for i in range(N):
+    T[i], P[i] = map(int, input().split())
 
-for i in range(1, n+1):
-    dp[i] = max(dp[i], dp[i-1])
-    
+for i in range(N-1, -1, -1): # 뒤에서 앞으로
+    if i + T[i] <= N:        # 기간 내 상담 완료 가능
+        dp[i] = max(dp[i+T[i]]+P[i], dp[i+1])
+    else:
+        dp[i] = dp[i+1]
 
-    if i + T[i-1] - 1 <= n:
-        dp[i + T[i-1]] = max(dp[i + T[i-1]], dp[i] + P[i-1])
-
-print(max(dp))
+print(dp[0])
