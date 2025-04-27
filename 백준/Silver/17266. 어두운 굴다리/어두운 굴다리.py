@@ -1,22 +1,20 @@
-N = int(input()) # 굴다리 길이
-M = int(input()) # 가로등 개수
-
-light = list(map(int, input().split()))
-
-left = 1
+N = int(input())
+M = int(input())
+X = list(map(int, input().split()))
+left = 0
 right = N
 
-while left <= right:
-    mid = (left + right) // 2
+while left<=right:
+    mid = (left+right)//2
 
-    current = 0 # 현재까지 밝은 위치치
+    current = 0
 
-    for x in light:
-        if x - mid > current:
-            break # 못 밝힌 부분이 있음
+    for x in X:
+        if x-mid>current:
+            break
         else:
             current = x + mid
-
+    
     if current >= N:
         result = mid
         right = mid - 1
