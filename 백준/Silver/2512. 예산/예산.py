@@ -1,29 +1,26 @@
-n = int(input())
-area = list(map(int, input().split()))
+N = int(input())
 
-price = int(input())
+arr = list(map(int, input().split()))
+M = int(input())
 
-if sum(area) <= price:
-    print(max(area))
-    exit()
+left = 1
+right = max(arr)
+cost = 0
 
-low, high = 1, max(area)
-result = 0
-
-while low <= high:
-    mid = (low+high)//2
-    max_price = 0
-
-    for i in range(n):
-        if area[i] >= mid:
-            max_price += mid
+while left<=right:
+    mid = (left+right)//2
+    total = 0
+    
+    for price in arr:
+        if price <= mid:
+            total += price
         else:
-            max_price += area[i]
-
-    if max_price <= price:
-        low = mid + 1
-        result = mid
+            total += mid
+    
+    if total <= M:
+        left = mid+1
+        cost = mid
     else:
-        high = mid - 1
+        right = mid-1
 
-print(result)
+print(cost)
