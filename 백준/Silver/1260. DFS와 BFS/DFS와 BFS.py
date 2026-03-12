@@ -1,44 +1,44 @@
-from collections import deque
+def dfs(c):
+    ans_dfs.append(c)
+    v[c] = 1
 
+    for n in adj[c]:
+        if v[n]==0:
+            dfs(n)
+
+def bfs(s):
+    q = []
+    q.append(s)
+    ans_bfs.append(s)
+    v[s] = 1
+
+    while q:
+        c = q.pop(0)
+        for n in adj[c]:
+            if not v[n]:
+                v[n] = 1
+                q.append(n)
+                ans_bfs.append(n)
+                
 N, M, V = map(int, input().split())
-
-graph = [[0] * (N+1) for _ in range(N+1)]
-
+adj = [[] for _ in range(N+1)]
 for _ in range(M):
-    a, b = map(int, input().split())
-    graph[a][b] = 1
-    graph[b][a] = 1
+    s, e = map(int, input().split())
+    adj[s].append(e)
+    adj[e].append(s)
 
-def BFS(start):
-    queue = deque([start])
-    visited = [False] * (N + 1)
-    visited[start] = True
+# 오름차순 정렬
+for i in range(1, N+1):
+    adj[i].sort()
 
-    while queue:
-        v = queue.popleft()
-        print(v, end=" ")
+# 방문 체크 배열
+v = [0] * (N+1)
+ans_dfs = []
+dfs(V)
 
-        for i in range(1, N+1):
-            if graph[v][i] == 1 and not visited[i]:
-                visited[i] = True
-                queue.append(i)
+v = [0] * (N+1)
+ans_bfs = []
+bfs(V)
 
-def DFS(start):
-    stack = [start]
-    visited = [False] * (N + 1)
-    result = []
-
-    while stack:
-        v = stack.pop()
-        if not visited[v]:
-            visited[v] = True
-            result.append(v) 
-
-            for i in range(N, 0, -1):
-                if graph[v][i] == 1 and not visited[i]:
-                    stack.append(i) 
-
-    print(" ".join(map(str, result)))
-
-DFS(V)
-BFS(V)  
+print(*ans_dfs)
+print(*ans_bfs)
