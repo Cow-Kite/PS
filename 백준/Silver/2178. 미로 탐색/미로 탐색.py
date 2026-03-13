@@ -1,38 +1,26 @@
-from collections import deque
+def bfs(si, sj, ei, ej):
+    q = []
+    v = [[0]*M for _ in range(N)]
+
+    q.append((si, sj))
+    v[si][sj]=1
+
+    while q:
+        ci, cj = q.pop(0)
+        # 정답 처리가 필요한 경우 이자리에서...
+        if (ci, cj) == (ei, ej):
+            return v[ei][ej]
+        
+        # 4방향, 범위내, 조건(arr == 1, v ==0)에 맞으면 q에 삽입
+        for di, dj in ((-1,0), (1,0), (0,-1), (0, 1)):
+            ni, nj = ci+di, cj+dj
+            if 0<=ni<N and 0<=nj<M and arr[ni][nj] and v[ni][nj]==0:
+                q.append((ni, nj))
+                v[ni][nj] = v[ci][cj] + 1
+
 
 N, M = map(int, input().split())
+arr = [list(map(int, input())) for _ in range(N)]
 
-miro = [[0] * (M+1) for _ in range(N+1)]
-
-for i in range(1, N+1):
-    line = input()
-    for j, value in enumerate(line, start=1):
-        miro[i][j] = int(value)
-
-visited = [[False] * (M+1) for _ in range(N+1)]
-
-queue = deque([(1, 1)])
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
-while queue:
-    x, y = queue.popleft()
-    visited[x][y] = True
-
-    if x == N and y == M:
-        print(miro[x][y])
-        break
-
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-
-        if nx < 1 or nx > N or ny < 1 or ny > M:
-            continue
-
-        if miro[nx][ny] == 0 or visited[nx][ny]:
-            continue
-        
-        miro[nx][ny] = miro[x][y] + 1
-        visited[nx][ny] = True
-        queue.append((nx, ny))
+ans = bfs(0, 0, N-1, M-1)
+print(ans)
