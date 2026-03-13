@@ -1,36 +1,32 @@
-from collections import deque
+def bfs(si, sj):
+    q = []
+    v[si][sj] = 1
+    q.append((si, sj))
+    cnt=1
+
+    while q:
+        ci, cj = q.pop(0)
+        for di, dj in ((-1, 0), (1,0), (0,-1), (0,1)):
+            ni, nj = ci+di, cj+dj
+            if 0<=ni<N and 0<=nj<N and arr[ni][nj]==1 and v[ni][nj]==0:
+                q.append((ni, nj))
+                cnt += 1
+                v[ni][nj]=1
+    
+    return cnt
+
+
 
 N = int(input())
-
-house = [list(map(int, input().strip())) for _ in range(N)]
-queue = deque()
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-visited = [[False] * (N) for _ in range(N)]
-result = []
+arr = [list(map(int, input())) for _ in range (N)]
+v = [[0]*N for _ in range(N)]
+ans = []
 
 for i in range(N):
     for j in range(N):
-        if house[i][j] == 1 and not visited[i][j]:
-            queue.append((i, j))
-            visited[i][j] = True
-            count = 1
+        if arr[i][j]==1 and v[i][j]==0:
+            ans.append(bfs(i, j))
 
-            while queue:
-                x, y = queue.popleft()
-                for d in range(4):
-                    nx = x + dx[d]
-                    ny = y + dy[d]
+ans.sort()
+print(len(ans), *ans, sep='\n')
 
-                    if 0 <= nx < N and 0 <= ny < N:
-                        if house[nx][ny] == 1 and not visited[nx][ny]:
-                            queue.append((nx, ny))
-                            visited[nx][ny] = True
-                            count += 1
-            
-            result.append(count)
-
-
-result.sort()
-print(len(result))
-print("\n".join(map(str, result)))
