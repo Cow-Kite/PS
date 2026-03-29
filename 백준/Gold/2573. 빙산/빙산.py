@@ -15,7 +15,7 @@ def bfs(si, sj, v):
                 v[ni][nj]=1
 
 def solve(): # 1~900000 년, 전체순회 반복 작업
-    for year in range(1, 900000):
+    for year in range(1, 10001):
         # [1] 네 방향 0 개수 카운트
         a_sub = [[0]*M for _ in range(N)]
         for i in range(1, N-1):
