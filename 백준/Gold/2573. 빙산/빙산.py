@@ -14,8 +14,10 @@ def bfs(si, sj, v):
                 q.append((ni, nj))
                 v[ni][nj]=1
 
-def solve(): # 1~900000 년, 전체순회 반복 작업
-    for year in range(1, 10001):
+def solve():
+    year = 0
+    while True:
+        year += 1
         # [1] 네 방향 0 개수 카운트
         a_sub = [[0]*M for _ in range(N)]
         for i in range(1, N-1):
@@ -47,8 +49,6 @@ def solve(): # 1~900000 년, 전체순회 반복 작업
         
         if cnt == 0: # 덩어리 개수 0개이면 stop
             return 0
-
-    return -1
 
 N, M = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
